@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mall.mapper.SysParamMapper">
+  <resultMap id="sysParamMap" type="com.qf.mall.pojo.SysParam">
+      <id column="paramId" property="paramId"/>
+      <result column="paramPath" property="paramPath"/>
+      <result column="param_name" property="paramName"/>
+  </resultMap>
+
+    <select id="findAllSysParam" resultMap="sysParamMap">
+        select * from system_param;
+    </select>
+</mapper>

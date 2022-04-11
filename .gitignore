@@ -1,0 +1,6 @@
+#忽略.idea目录，不提交到远程仓库
+/.idea
+#忽略target
+/target
+#忽略所有的class文件
+*.class

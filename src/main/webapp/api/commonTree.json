@@ -1,0 +1,46 @@
+{
+  "status":{"code":200,"message":"操作成功"},
+  "data":[
+    {
+    "id":"001",
+    "title": "湖南省",
+    "parentId": "0",
+    "children":[
+      {
+      "id":"001001",
+      "title": "长沙市",
+      "parentId": "001",
+        "children":[
+          {
+            "id":"001003",
+            "title": "长沙市",
+            "parentId": "001001"
+          },
+          {
+            "id":"001004",
+            "title": "株洲市",
+            "parentId": "001001"
+          }
+        ]
+    },
+      {
+      "id":"001002",
+      "title": "株洲市",
+      "parentId": "001",
+        "children":[
+          {
+            "id":"001005",
+            "title": "长沙市2",
+            "parentId": "001002"
+          },
+          {
+            "id":"001006",
+            "title": "株洲市2",
+            "parentId": "001002"
+
+          }
+        ]
+    }
+    ]
+  }]
+}

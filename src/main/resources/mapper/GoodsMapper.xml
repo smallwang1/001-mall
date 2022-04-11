@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mall.mapper.GoodsMapper">
+    <resultMap id="goodsMap" type="com.qf.mall.pojo.Goods">
+        <id column="goods_id" property="goodsName"/>
+        <result column="head" property="head"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="buy_price" property="buyPrice"/>
+        <result column="sell_price" property="sellPrice"/>
+        <result column="vip_sell_price" property="vipSellPrice"/>
+        <result column="goods_instruction" property="goodsInstruction"/>
+        <result column="goods_type_id" property="goodsTypeId"/>
+        <result column="inventory" property="inventory"/>
+     </resultMap>
+
+    <resultMap id="goodsMapType" type="com.qf.mall.pojo.GoodsVo">
+        <id column="goods_id" property="goodsName"/>
+        <result column="head" property="head"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="buy_price" property="buyPrice"/>
+        <result column="sell_price" property="sellPrice"/>
+        <result column="vip_sell_price" property="vipSellPrice"/>
+        <result column="goods_instruction" property="goodsInstruction"/>
+        <result column="goods_type_id" property="goodsTypeId"/>
+        <result column="inventory" property="inventory"/>
+        <result column="goods_type_name" property="goodsTypeName"/>
+    </resultMap>
+
+    <sql id="columAll">
+      goods_id,head,goods_name,buy_price,sell_price,vip_sell_price,goods_instruction,tb_goods.goods_type_id,inventory
+    </sql>
+
+
+    <select id="getAllGoodsByVo" parameterType="com.qf.mall.common.GoodsSerchVo" resultMap="goodsMapType">
+        select <include refid="columAll"></include>,tb_goods_type.goods_type_name
+        from tb_goods left join tb_goods_type on tb_goods.goods_type_id=tb_goods_type.goods_type_id
+        <where>
+          <if test="goodsName!=null and goodsName!=''">
+              and goods_name like concat("%",#{goodsName},"%")
+          </if>
+          <if test="goodsTypeName!=null and goodsTypeName!=''">
+              and tb_goods_type.goods_type_name=#{goodsTypeName}
+          </if>
+        </where>
+        order by goods_id
+    </select>
+
+</mapper>
+

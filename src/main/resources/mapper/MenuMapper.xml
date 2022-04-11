@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.mall.mapper.MenuMapper">
+    <resultMap id="menuMap" type="com.qf.mall.pojo.Menu">
+        <id column="menu_id" property="menuId"/>
+        <result column="title" property="title"/>
+        <result column="icon" property="icon"/>
+        <result column="href" property="href"/>
+        <result column="target" property="target"/>
+        <result column="parent_is" property="parentIs"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="open" property="open"/>
+        <collection property="child" column="menu_id" select="com.qf.mall.mapper.MenuMapper.findMenuByParentId"/>
+    </resultMap>
+
+    <resultMap id="menuDtreeMap" type="com.qf.mall.pojo.Menu">
+        <id column="menu_id" property="menuId"/>
+        <result column="title" property="title"/>
+        <result column="icon" property="icon"/>
+        <result column="href" property="href"/>
+        <result column="target" property="target"/>
+        <result column="parent_is" property="parentIs"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="open" property="open"/>
+    </resultMap>
+
+    <insert id="addMenu" parameterType="com.qf.mall.pojo.Menu">
+        insert into tb_Menu  (title,icon,href,target,parent_is,parent_id,open) values (
+            #{title},
+            #{icon},
+            #{href},
+            #{target},
+            #{parentIs},
+            #{parentId},
+            #{open}
+        )
+    </insert>
+
+    <update id="updataParentIs" parameterType="com.qf.mall.pojo.User">
+        update tb_menu
+        <set>
+            <if test="parentIs!=null and parentIs!=''">,parent_is=#{parentIs}</if>
+        </set>
+        where menu_id=#{parentId}
+    </update>
+
+    <select id="findMenuByParentId" resultMap="menuMap">
+        select
+            menu_id,
+            title,
+            icon,
+            href,
+            target,
+            parent_is,
+            parent_id,
+            open
+    from tb_menu where  parent_id=#{v}
+    </select>
+
+    <select id="findMenuAll" resultMap="menuDtreeMap">
+        select
+            menu_id,
+            title,
+            icon,
+            href,
+            target,
+            parent_is,
+            parent_id,
+            open
+    from tb_menu
+    </select>
+    <select id="findMenuDtreeByParentId" resultMap="menuDtreeMap">
+        select
+            menu_id,
+            title,
+            icon,
+            href,
+            target,
+            parent_is,
+            parent_id,
+            open
+         from tb_menu
+            <where>
+                <if test="parentId!=-1">
+                    parent_id=#{parentId}
+                </if>
+            </where>
+    </select>
+
+    <select id="findParentMenuByChildParentId" resultMap="menuMap">
+        select
+            menu_id,
+            title,
+            icon,
+            href,
+            target,
+            parent_is,
+            parent_id,
+            open
+    from tb_menu where  menu_id=#{v}
+    </select>
+</mapper>
